@@ -1,7 +1,7 @@
 var express = require('express')
 var app = express()
-//require 사용!!
 fs = require('fs');
+//require 사용!!
 var content = fs.readFileSync('./usr.txt','utf-8');
 var usr = content.toString().split("\n");
 
