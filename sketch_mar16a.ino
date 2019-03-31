@@ -84,12 +84,7 @@ void setup() {
 
 
 void loop() {
-  /*
-    const uint16_t port = 80;
-    const uint16_t port2 = 8080;
-    const char * host = "api.thingspeak.com"; // ip or dns
-    const char * host2 = "ec2-54-180-149-98.ap-northeast-2.compute.amazonaws.com";
-*/
+
   const uint16_t port = port_1;
   const uint16_t port2 = port_2;
   const char * host = host_1; // ip or dns
