@@ -2,3 +2,5 @@ localhost
 me
 mypassword
 mydb
+https://github.com/jjw0716/my_project1/blob/master/s5_send_static_graph_html.js
+https://github.com/jjw0716/my_project1/blob/master/sketch_mar16a.ino
