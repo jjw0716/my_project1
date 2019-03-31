@@ -10,8 +10,12 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
+#include "my_h.h"
+
 // Data wire is plugged into port 2 on the Arduino
 #define ONE_WIRE_BUS D2
+
+
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
@@ -59,7 +63,7 @@ void setup() {
     delay(10);
 
     // We start by connecting to a WiFi network
-    WiFiMulti.addAP("V35 ThinQ_5984", "253fef0a1a4e");
+    WiFiMulti.addAP(WIFI_ID, WIFI_PW);
 
     Serial.println();
     Serial.println();
@@ -80,11 +84,16 @@ void setup() {
 
 
 void loop() {
+  /*
     const uint16_t port = 80;
     const uint16_t port2 = 8080;
     const char * host = "api.thingspeak.com"; // ip or dns
     const char * host2 = "ec2-54-180-149-98.ap-northeast-2.compute.amazonaws.com";
-
+*/
+  const uint16_t port = port_1;
+  const uint16_t port2 = port_2;
+  const char * host = host_1; // ip or dns
+  const char * host2 = host_2;
   Serial.print("Requesting temperatures...");
   sensors.requestTemperatures(); // Send the command to get temperatures
   Serial.println("DONE");
@@ -104,7 +113,7 @@ void loop() {
         delay(5000);
         return;
     }
-   String url = "/update?api_key=9OIPCK8DKGPEZVBX&field1=";
+   String url = url_1;
   url += tempC;
    client.print(String("GET ") + url + " HTTP/1.1\r\n" + 
                 "Host: " + host + "\r\n" +
@@ -142,8 +151,9 @@ void loop() {
         return;
     }
 
-   url = "/temp?tmp=";
+   url = url_2;
    url += tempC;
+   url += "&seq=35";
    client.print(String("GET ") + url + " HTTP/1.1\r\n" + 
                 "Host: " + host2 + "\r\n" +
                 "Connection: close\r\n\r\n");
