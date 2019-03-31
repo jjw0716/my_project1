@@ -81,7 +81,9 @@ void setup() {
 
 void loop() {
     const uint16_t port = 80;
+    const uint16_t port2 = 8080;
     const char * host = "api.thingspeak.com"; // ip or dns
+    const char * host2 = "ec2-54-180-149-98.ap-northeast-2.compute.amazonaws.com";
 
   Serial.print("Requesting temperatures...");
   sensors.requestTemperatures(); // Send the command to get temperatures
@@ -107,7 +109,7 @@ void loop() {
    client.print(String("GET ") + url + " HTTP/1.1\r\n" + 
                 "Host: " + host + "\r\n" +
                 "Connection: close\r\n\r\n");
-
+                
     unsigned long timeout = millis();
     while (client.available() == 0){
       if (millis() - timeout > 5000) {
@@ -126,7 +128,39 @@ void loop() {
 
     Serial.println("closing connection");
     client.stop();
-    
+
+   /// server
+
+   
+   Serial.print("connecting to my server");
+   Serial.println(host2);
+
+   if (!client.connect(host2, port2)) {
+        Serial.println("connection_2 failed");
+        Serial.println("wait 5 sec...");
+        delay(5000);
+        return;
+    }
+
+   url = "/temp?tmp=";
+   url += tempC;
+   client.print(String("GET ") + url + " HTTP/1.1\r\n" + 
+                "Host: " + host2 + "\r\n" +
+                "Connection: close\r\n\r\n");
+
+   //unsigned long 
+   timeout = millis();
+    while (client.available() == 0){
+      if (millis() - timeout > 5000) {
+        Serial.println(">>> Client TImeout !");
+        client.stop();
+        return;
+      }
+    }
+
+     Serial.println("closing connection_2");
+    client.stop();
+
     Serial.println("wait 60 sec...");
     delay(60000);
 }
