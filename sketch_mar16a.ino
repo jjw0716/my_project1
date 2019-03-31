@@ -10,6 +10,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
+//헤더 사용!!
 #include "my_h.h"
 
 // Data wire is plugged into port 2 on the Arduino
